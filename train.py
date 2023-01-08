@@ -63,6 +63,9 @@ if __name__ == '__main__':
             model.set_input(data)         # unpack data from dataset and apply preprocessing
             model.optimize_parameters()   # calculate loss functions, get gradients, update network weights
 
+            losses = model.get_current_losses()
+            writer.log_metrics(losses, total_iters)
+
             if total_iters % opt.display_freq == 0:   # display images on visdom and save images to a HTML file
                 save_result = total_iters % opt.update_html_freq == 0
                 model.compute_visuals()
@@ -74,7 +77,6 @@ if __name__ == '__main__':
                 visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
                 if opt.display_id > 0:
                     visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, losses)
-                writer.log_metrics(losses, total_iters)
 
             if total_iters % opt.save_latest_freq == 0:   # cache our latest model every <save_latest_freq> iterations
                 print('saving the latest model (epoch %d, total_iters %d)' % (epoch, total_iters))
