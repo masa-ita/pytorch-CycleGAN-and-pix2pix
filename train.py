@@ -18,14 +18,26 @@ See options/base_options.py and options/train_options.py for more training optio
 See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/tips.md
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
+import os
 import time
 from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
+from util.mlflow_writer import MlflowWriter
+
+EXPERIMENT_NAME = "PyTorch CycleGAN"
 
 if __name__ == '__main__':
+    cwd = os.getcwd()
+    tracking_uri = f"file://{os.path.join(cwd, 'mlruns')}"
+    registry_uri = tracking_uri
+
+    writer = MlflowWriter(EXPERIMENT_NAME, tracking_uri=tracking_uri, registry_uri=registry_uri)
     opt = TrainOptions().parse()   # get training options
+
+    writer.log_params_from_args(opt)
+
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
@@ -62,6 +74,7 @@ if __name__ == '__main__':
                 visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
                 if opt.display_id > 0:
                     visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, losses)
+                writer
 
             if total_iters % opt.save_latest_freq == 0:   # cache our latest model every <save_latest_freq> iterations
                 print('saving the latest model (epoch %d, total_iters %d)' % (epoch, total_iters))
@@ -75,3 +88,5 @@ if __name__ == '__main__':
             model.save_networks(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
+
+    writer.set_terminated()
