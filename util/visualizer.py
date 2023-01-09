@@ -100,8 +100,8 @@ class Visualizer():
             util.mkdirs([self.web_dir, self.img_dir])
 
         if self.use_mlflow:
-            self.mflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
-            self.mflow_writer.log_params_from_args(self.opt)
+            self.mlflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
+            self.mlflow_writer.log_params_from_args(self.opt)
 
         # create a logging file to store training losses
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
@@ -203,7 +203,7 @@ class Visualizer():
                 img_path = os.path.join(self.img_dir, 'epoch%.3d_%s.png' % (epoch, label))
                 util.save_image(image_numpy, img_path)
                 if self.use_mlflow:
-                    self.mflow_writer.log_artifact(img_path)
+                    self.mlflow_writer.log_artifact(img_path)
 
             # update website
             webpage = html.HTML(self.web_dir, 'Experiment name = %s' % self.name, refresh=1)
@@ -269,7 +269,7 @@ class Visualizer():
             log_file.write('%s\n' % message)  # save the message
         
         if self.use_mlflow:
-            self.mflow_writer.log_metrics(losses, total_iters)
+            self.mlflow_writer.log_metrics(losses, total_iters)
 
     def close(self):
         if self.use_mlflow:
