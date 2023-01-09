@@ -5,7 +5,7 @@ import ntpath
 import time
 from . import util, html
 from subprocess import Popen, PIPE
-from mlflow_writer import MlflowWriter
+from util.mlflow_writer import MlflowWriter
 
 try:
     import wandb
