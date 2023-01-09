@@ -66,7 +66,7 @@ if __name__ == '__main__':
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
                 losses = model.get_current_losses()
                 t_comp = (time.time() - iter_start_time) / opt.batch_size
-                visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data)
+                visualizer.print_current_losses(epoch, epoch_iter, losses, t_comp, t_data, total_iters)
                 if opt.display_id > 0:
                     visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, losses)
 
@@ -83,4 +83,4 @@ if __name__ == '__main__':
 
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
 
-    writer.set_terminated()
+    visualizer.close()
