@@ -1,0 +1,11 @@
+defaults:
+  - base@_global_:
+    - basic
+    - dataset
+    - model
+    - additional
+    - wandb
+  - train@_global_:
+    - training
+    - network
+    - visualize

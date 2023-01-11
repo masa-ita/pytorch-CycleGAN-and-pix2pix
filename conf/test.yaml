@@ -1,0 +1,8 @@
+defaults:
+  - base@_global_:
+    - basic
+    - dataset
+    - model
+    - additional
+  - test@_global_:
+    - test

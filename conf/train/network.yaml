@@ -1,0 +1,6 @@
+save_latest_freq: 5000    # frequency of saving the latest results
+save_epoch_freq:  5       # frequency of saving checkpoints at the end of epochs
+save_by_iter:     false   # whether saves model by iteration
+continue_train:   false   # continue training: load the latest model
+epoch_count:      1       # the starting epoch count, we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>, ...
+phase:            'train' # train, val, test, etc

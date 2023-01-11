@@ -1,0 +1,12 @@
+model:      'cycle_gan'       # chooses which model to use. [cycle_gan | pix2pix | test | colorization]
+input_nc:   3                 # # of input image channels: 3 for RGB and 1 for grayscale
+output_nc:  3                 # # of output image channels: 3 for RGB and 1 for grayscale
+ngf:        64                # # of gen filters in the last conv layer
+ndf:        64                # # of discrim filters in the first conv layer
+netD:       'basic'           # specify discriminator architecture [basic | n_layers | pixel]. The basic model is a 70x70 PatchGAN. n_layers allows you to specify the layers in the discriminator
+netG:       'resnet_9blocks'  # specify generator architecture [resnet_9blocks | resnet_6blocks | unet_256 | unet_128]
+n_layers_D: 3                 # only used if netD==n_layers
+norm:       'instance'        # instance normalization or batch normalization [instance | batch | none]
+init_type:  'normal'          # network initialization [normal | xavier | kaiming | orthogonal]
+init_gain:  0.02              # scaling factor for normal, xavier and orthogonal.
+no_dropout: false             # no dropout for the generator

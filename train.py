@@ -19,13 +19,14 @@ See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-p
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
 import time
-from options.train_options import TrainOptions
+import hydra
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
 
-if __name__ == '__main__':
-    opt = TrainOptions().parse()   # get training options
+
+@hydra.main(version_base=None, config_path="conf", config_name="train")
+def main(opt):
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
@@ -75,3 +76,6 @@ if __name__ == '__main__':
             model.save_networks(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
+
+if __name__ == '__main__':
+    main()
