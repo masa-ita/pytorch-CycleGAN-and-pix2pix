@@ -10,7 +10,7 @@ from util.mlflow_writer import MlflowWriter
 try:
     import wandb
 except ImportError:
-    print('Warning: wandb package cannot be found. The option "--use_wandb" will result in error.')
+    print('Warning: wandb package cannot be found. The option "use_wandb=true" will result in error.')
 
 if sys.version_info[0] == 2:
     VisdomExceptionBase = Exception
