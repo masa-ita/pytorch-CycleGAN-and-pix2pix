@@ -1,7 +1,9 @@
 n_epochs:         100       # number of epochs with the initial learning rate
 n_epochs_decay:   100       # number of epochs to linearly decay learning rate to zero
-beta1:            0.5       # momentum term of adam
-lr:               0.0002    # initial learning rate for adam
+beta1_G:           0.5       # momentum term of adam for generators
+beta1_D:           0.5       # momentum term of adam for discriminators
+lr_G:              0.0002    # initial learning rate for adam for generators
+lr_D:              0.0002    # initial learning rate for adam for discriminators
 gan_mode:         'lsgan'   # the type of GAN objective. [vanilla| lsgan | wgangp]. vanilla GAN loss is the cross-entropy objective used in the original GAN paper.
 lambda_A:         10.0      # weight for cycle loss (A -> B -> A)
 lambda_B:         10.0      # weight for cycle loss (B -> A -> B)
