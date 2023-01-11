@@ -31,7 +31,7 @@ EXPERIMENT_NAME = "PyTorch CycleGAN"
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
-    cwd = os.getcwd()
+    opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)

@@ -1,3 +1,6 @@
+hydra:
+  run:
+    dir: multirun/${name}/${hydra.job.override_dirname}
 defaults:
   - base@_global_:
     - basic
