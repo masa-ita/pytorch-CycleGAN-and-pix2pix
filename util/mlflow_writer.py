@@ -1,4 +1,5 @@
 from mlflow import MlflowClient
+from omegaconf import DictConfig, ListConfig
 
 class MlflowWriter():
     def __init__(self, experiment_name, **kwargs):
@@ -10,9 +11,20 @@ class MlflowWriter():
 
         self.run_id = self.client.create_run(self.experiment_id).info.run_id
 
-    def log_params_from_args(self, args):
-        for param_name, element in vars(args).items():
-            self.log_param(param_name, element)
+    def log_params_from_omegaconf_dict(self, params):
+        for param_name, element in params.items():
+            self._explore_recursive(param_name, element)
+
+    def _explore_recursive(self, parent_name, element):
+        if isinstance(element, DictConfig):
+            for k, v in element.items():
+                if isinstance(v, DictConfig) or isinstance(v, ListConfig):
+                    self._explore_recursive(f'{parent_name}.{k}', v)
+                else:
+                    self.client.log_param(self.run_id, f'{parent_name}.{k}', v)
+        elif isinstance(element, ListConfig):
+            for i, v in enumerate(element):
+                self.client.log_param(self.run_id, f'{parent_name}.{i}', v)
 
     def log_param(self, key, value):
         self.client.log_param(self.run_id, key, value)

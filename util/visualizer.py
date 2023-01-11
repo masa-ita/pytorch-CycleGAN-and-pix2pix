@@ -101,7 +101,7 @@ class Visualizer():
 
         if self.use_mlflow:
             self.mlflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
-            self.mlflow_writer.log_params_from_args(self.opt)
+            self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
 
         # create a logging file to store training losses
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
