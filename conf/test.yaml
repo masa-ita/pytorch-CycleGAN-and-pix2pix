@@ -4,5 +4,9 @@ defaults:
     - dataset
     - model
     - additional
+    - wandb
+  - train@_global_:
+    - visualize
   - test@_global_:
     - test
+isTrain: false

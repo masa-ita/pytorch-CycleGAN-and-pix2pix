@@ -1,4 +1,4 @@
 dataroot:         ''                # path to images (should have subfolders trainA, trainB, valA, valB, etc
 name:             'experiment_name' # name of the experiment. It decides where to store samples and models'
-gpu_ids:          0                 # gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU
+gpu_ids:          [0]               # gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU
 checkpoints_dir:  './checkpoints'   # models are saved here

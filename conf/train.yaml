@@ -9,3 +9,4 @@ defaults:
     - training
     - network
     - visualize
+isTrain:          true

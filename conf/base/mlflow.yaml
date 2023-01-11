@@ -1,3 +1,0 @@
-use_mlflow: false # if specified, then init mlflow logging
-tracking_uri: 'file:./mlruns' # tracking_uri for mlflow
-registry_uri: 'file:./mlruns' # registry_uri for mlflow
