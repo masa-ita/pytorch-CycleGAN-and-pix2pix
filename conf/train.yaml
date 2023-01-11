@@ -5,6 +5,7 @@ defaults:
     - model
     - additional
     - wandb
+    - mlflow
   - train@_global_:
     - training
     - network
