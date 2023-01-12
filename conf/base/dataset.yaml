@@ -8,4 +8,3 @@ crop_size:        256               # then crop to this size
 max_dataset_size: 65536             # Maximum number of samples allowed per dataset. If the dataset directory contains more than max_dataset_size, only a subset is loaded.
 preprocess:       'resize_and_crop' # scaling and cropping of images at load time [resize_and_crop | crop | scale_width | scale_width_and_crop | none]
 no_flip:          false             #  if specified, do not flip the images for data augmentation
-display_winsize:  256               # display window size for both visdom and HTML

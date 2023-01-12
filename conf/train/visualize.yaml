@@ -1,5 +1,6 @@
 display_freq:     400                 # frequency of showing training results on screen
 display_ncols:    4                   # if positive, display all images in a single visdom web panel with certain number of images per row.
+display_winsize:  256                 # display window size for both visdom and HTML
 display_id:       1                   # window id of the web display
 display_server:   "http://localhost"  # visdom server of the web display
 display_env:      'main'              # visdom display environment name (default is "main")
