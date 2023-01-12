@@ -41,7 +41,7 @@ except ImportError:
 
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):
-    opt = TestOption().setup(opt) # get test options
+    opt = TestOptions().setup(opt) # get test options
    # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
     opt.batch_size = 1    # test code only supports batch_size = 1
