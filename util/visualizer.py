@@ -3,8 +3,11 @@ import os
 import sys
 import ntpath
 import time
+from urllib.parse import urlparse
+import pathlib
 from . import util, html
 from subprocess import Popen, PIPE
+import hydra
 from util.mlflow_writer import MlflowWriter
 
 try:
@@ -100,6 +103,8 @@ class Visualizer():
             util.mkdirs([self.web_dir, self.img_dir])
 
         if self.use_mlflow:
+            self.tracking_uri = self._uri_convert(self.tracking_uri)
+            self.registry_uri = self._uri_convert(self.registry_uri)
             self.mlflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
             self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
 
@@ -109,6 +114,13 @@ class Visualizer():
             now = time.strftime("%c")
             log_file.write('================ Training Loss (%s) ================\n' % now)
 
+    def _uri_convert(self, uri):
+        p = urlparse(uri)
+        if p.scheme == "file":
+            abs_path = hydra.utils.to_absolute_path(os.path.join(p.netloc, p.path))
+            uri = pathlib.Path(abs_path).as_uri()
+        return uri
+    
     def reset(self):
         """Reset the self.saved status"""
         self.saved = False
