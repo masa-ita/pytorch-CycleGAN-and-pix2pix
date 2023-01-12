@@ -28,6 +28,7 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 """
 import os
 import hydra
+from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
@@ -40,6 +41,7 @@ except ImportError:
 
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):
+    opt = TestOption().setup(opt) # get test options
    # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
     opt.batch_size = 1    # test code only supports batch_size = 1

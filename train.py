@@ -20,6 +20,7 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 """
 import time
 import hydra
+from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
@@ -27,6 +28,7 @@ from util.visualizer import Visualizer
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
+    opt = TrainOptions().setup(opt)   # get training options
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
