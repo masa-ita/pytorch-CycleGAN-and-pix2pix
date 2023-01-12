@@ -48,3 +48,4 @@ wandb/
 outputs/
 #Ignore mflow outputs
 mlruns/
+multirun/
