@@ -25,6 +25,8 @@ class MlflowWriter():
         elif isinstance(element, ListConfig):
             for i, v in enumerate(element):
                 self.client.log_param(self.run_id, f'{parent_name}.{i}', v)
+        else:
+            self.client.log_param(self.run_id, parent_name, element)
 
     def log_param(self, key, value):
         self.client.log_param(self.run_id, key, value)
