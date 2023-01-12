@@ -1,6 +1,11 @@
 hydra:
+  job:
+    chdir: true
   run:
-    dir: multirun/${name}/${hydra.job.override_dirname}
+    dir: outpus/${name}/${my_override_dirname:${hydra.overrides}}
+  sweep:
+    dir: multirun/${name}
+    subdir: ${my_override_dirname:${hydra.overrides}}
 defaults:
   - base@_global_:
     - basic

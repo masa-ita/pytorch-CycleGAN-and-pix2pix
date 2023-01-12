@@ -21,16 +21,32 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 import os
 import time
 import hydra
+from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
 from util.mlflow_writer import MlflowWriter
 
-EXPERIMENT_NAME = "PyTorch CycleGAN"
+def my_override_dirname(overrides: ListConfig) -> str:
+    """Process the overrides passed to the app and return a single string"""
+    task_overrides: ListConfig = overrides.task
+    ret: str = "_".join(task_overrides)
+    ret = ret.replace("{", "")
+    ret = ret.replace("}", "")
+    ret = ret.replace("[", "")
+    ret = ret.replace("]", "")
+    ret = ret.replace(",", "_")
+    ret = ret.replace("/", "_")
+    ret = ret.replace("=", "-")
+    return ret
 
+OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
+    from hydra.core.hydra_config import HydraConfig
+    print(HydraConfig.get().runtime.output_dir)
+
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
