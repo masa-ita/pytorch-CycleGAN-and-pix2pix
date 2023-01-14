@@ -46,3 +46,6 @@ test/data/legacy_serialized.pt
 wandb/
 # Ignore Hydra outputs
 outputs/
+# Ignore MLflow outputs
+mlruns/
+multirun/

@@ -75,10 +75,9 @@ class Visualizer():
         self.name = opt.name
         self.port = opt.display_port
         self.saved = False
-        self.use_wandb = opt.use_wandb
-        self.wandb_project_name = opt.wandb_project_name
         self.current_epoch = 0
         self.ncols = opt.display_ncols
+        self.use_wandb = opt.get('use_wandb', False)
 
         if self.display_id > 0:  # connect to a visdom server given <display_port> and <display_server>
             import visdom
@@ -87,6 +86,7 @@ class Visualizer():
                 self.create_visdom_connections()
 
         if self.use_wandb:
+            self.wandb_project_name = opt.wandb_project_name
             self.wandb_run = wandb.init(project=self.wandb_project_name, name=opt.name, config=opt) if not wandb.run else wandb.run
             self.wandb_run._label(repo='CycleGAN-and-pix2pix')
 
