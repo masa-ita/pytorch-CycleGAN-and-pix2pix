@@ -41,6 +41,8 @@ def my_override_dirname(overrides: ListConfig) -> str:
     ret = ret.replace("=", "-")
     return ret
 
+OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
+
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
     opt = TrainOptions().setup(opt)   # get training options
