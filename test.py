@@ -29,6 +29,7 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 import os
 import hydra
 from options.test_options import TestOptions
+from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
@@ -38,6 +39,21 @@ try:
     import wandb
 except ImportError:
     print('Warning: wandb package cannot be found. The option "--use_wandb" will result in error.')
+
+def my_override_dirname(overrides: ListConfig) -> str:
+    """Process the overrides passed to the app and return a single string"""
+    task_overrides: ListConfig = overrides.task
+    ret: str = "_".join(task_overrides)
+    ret = ret.replace("{", "")
+    ret = ret.replace("}", "")
+    ret = ret.replace("[", "")
+    ret = ret.replace("]", "")
+    ret = ret.replace(",", "_")
+    ret = ret.replace("/", "_")
+    ret = ret.replace("=", "-")
+    return ret
+
+OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):

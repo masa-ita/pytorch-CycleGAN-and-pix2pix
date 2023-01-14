@@ -21,6 +21,7 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 import os
 import time
 import hydra
+from hydra.core.hydra_config import HydraConfig
 from options.train_options import TrainOptions
 from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
@@ -55,6 +56,7 @@ def main(opt):
     model = create_model(opt)      # create a model given opt.model and other options
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
+    visualizer.mlflow_writer.log_param("output_dir", HydraConfig.get().runtime.output_dir)
     total_iters = 0                # the total number of training iterations
 
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
