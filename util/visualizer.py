@@ -3,14 +3,17 @@ import os
 import sys
 import ntpath
 import time
+from urllib.parse import urlparse
+import pathlib
 from . import util, html
 from subprocess import Popen, PIPE
+import hydra
 from util.mlflow_writer import MlflowWriter
 
 try:
     import wandb
 except ImportError:
-    print('Warning: wandb package cannot be found. The option "--use_wandb" will result in error.')
+    print('Warning: wandb package cannot be found. The option "use_wandb=true" will result in error.')
 
 if sys.version_info[0] == 2:
     VisdomExceptionBase = Exception
@@ -100,8 +103,10 @@ class Visualizer():
             util.mkdirs([self.web_dir, self.img_dir])
 
         if self.use_mlflow:
+            self.tracking_uri = self._uri_convert(self.tracking_uri)
+            self.registry_uri = self._uri_convert(self.registry_uri)
             self.mlflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
-            self.mlflow_writer.log_params_from_args(self.opt)
+            self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
 
         # create a logging file to store training losses
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
@@ -109,6 +114,13 @@ class Visualizer():
             now = time.strftime("%c")
             log_file.write('================ Training Loss (%s) ================\n' % now)
 
+    def _uri_convert(self, uri):
+        p = urlparse(uri)
+        if p.scheme == "file":
+            abs_path = hydra.utils.to_absolute_path(os.path.join(p.netloc, p.path))
+            uri = pathlib.Path(abs_path).as_uri()
+        return uri
+    
     def reset(self):
         """Reset the self.saved status"""
         self.saved = False

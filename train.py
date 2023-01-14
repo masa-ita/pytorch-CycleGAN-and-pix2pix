@@ -22,17 +22,30 @@ import os
 import time
 import hydra
 from options.train_options import TrainOptions
+from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
 from util.mlflow_writer import MlflowWriter
 
-EXPERIMENT_NAME = "PyTorch CycleGAN"
-
+def my_override_dirname(overrides: ListConfig) -> str:
+    """Process the overrides passed to the app and return a single string"""
+    task_overrides: ListConfig = overrides.task
+    ret: str = "_".join(task_overrides)
+    ret = ret.replace("{", "")
+    ret = ret.replace("}", "")
+    ret = ret.replace("[", "")
+    ret = ret.replace("]", "")
+    ret = ret.replace(",", "_")
+    ret = ret.replace("/", "_")
+    ret = ret.replace("=", "-")
+    return ret
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
     opt = TrainOptions().setup(opt)   # get training options
+
+    opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
