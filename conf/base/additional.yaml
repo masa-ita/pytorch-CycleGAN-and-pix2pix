@@ -1,4 +1,0 @@
-epoch:      'latest'  # which epoch to load? set to latest to use latest cached model
-load_iter:  0         # which iteration to load? if load_iter > 0, the code will load models by iter_[load_iter]; otherwise, the code will load models by [epoch]
-verbose:    false     # if specified, print more debugging information
-suffix:     ''        # customized suffix: opt.name = opt.name + suffix: e.g., {model}_{netG}_size{load_size}

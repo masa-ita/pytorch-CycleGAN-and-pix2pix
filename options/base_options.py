@@ -20,7 +20,7 @@ class BaseOptions():
         self.initialized = True
         return opt
 
-    def gather_options(self):
+    def gather_options(self, opt):
         """Initialize opt with basic options(only once).
         Add additional model-specific and dataset-specific options.
         These options are defined in the <modify_commandline_options> function
@@ -29,14 +29,10 @@ class BaseOptions():
         if not self.initialized:  # check if it has been initialized
             opt = self.initialize(opt)
 
-        # get the basic options
-        opt, _ = opt.parse_known_args()
-
         # modify model-related parser options
-        model_name = opt.model
+        model_name = opt.model_name
         model_option_setter = models.get_option_setter(model_name)
         opt = model_option_setter(opt, self.isTrain)
-        opt, _ = opt.parse_known_args()  # parse again with new defaults
 
         # modify dataset-related parser options
         dataset_name = opt.dataset_mode
@@ -49,7 +45,7 @@ class BaseOptions():
 
     def setup(self, opt):
         """Parse our options, create checkpoints directory suffix, and set up gpu device."""
-        opt = self.gather_options()
+        opt = self.gather_options(opt)
         opt.isTrain = self.isTrain   # train or test
 
         # process opt.suffix
@@ -58,7 +54,7 @@ class BaseOptions():
             opt.name = opt.name + suffix
 
         # set gpu ids
-        str_ids = opt.gpu_ids.split(',')
+        str_ids = opt.gpu_ids.split(',') if opt.gpu_ids else [] # for empty string
         opt.gpu_ids = []
         for str_id in str_ids:
             id = int(str_id)

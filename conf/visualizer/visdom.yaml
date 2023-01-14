@@ -1,9 +1,6 @@
-display_freq:     400                 # frequency of showing training results on screen
+# @package _global_
 display_ncols:    4                   # if positive, display all images in a single visdom web panel with certain number of images per row.
 display_id:       1                   # window id of the web display
 display_server:   "http://localhost"  # visdom server of the web display
 display_env:      'main'              # visdom display environment name (default is "main")
 display_port:     8097                # visdom port of the web display
-update_html_freq: 1000                # frequency of saving training results to html
-print_freq:       100                 # frequency of showing training results on console
-no_html:          false               #  do not save intermediate training results to [opt.checkpoints_dir]/[opt.name]/web/

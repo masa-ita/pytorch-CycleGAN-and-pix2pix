@@ -1,2 +1,0 @@
-use_wandb:          false                   # if specified, then init wandb logging
-wandb_project_name: 'CycleGAN-and-pix2pix'  # specify wandb project name
