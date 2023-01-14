@@ -9,7 +9,7 @@ hydra:
 defaults:
   - base
   - model:          cycle_gan
-  - visualizer:     [visdom]
+  - visualizer:     [visdom,mlflow]
   - _self_
 
 isTrain:          true
