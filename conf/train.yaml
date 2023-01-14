@@ -26,4 +26,3 @@ print_freq:       100       # frequency of showing training results on console
 no_html:          false     #  do not save intermediate training results to [opt.checkpoints_dir]/[opt.name]/web/
 
 dataroot:         'datasets/data'
-gpu_ids:          ''
