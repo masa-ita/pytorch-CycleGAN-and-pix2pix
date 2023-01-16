@@ -58,6 +58,8 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):
     opt = TestOptions().setup(opt) # get test options
+
+    opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
    # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
     opt.batch_size = 1    # test code only supports batch_size = 1
@@ -69,7 +71,7 @@ def main(opt):
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     # initialize logger
-    if opt.use_wandb:
+    if opt.get('use_wandb', False):
         wandb_run = wandb.init(project=opt.wandb_project_name, name=opt.name, config=opt) if not wandb.run else wandb.run
         wandb_run._label(repo='CycleGAN-and-pix2pix')
 
@@ -93,7 +95,7 @@ def main(opt):
         img_path = model.get_image_paths()     # get image paths
         if i % 5 == 0:  # save images to an HTML file
             print('processing (%04d)-th image... %s' % (i, img_path))
-        save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.use_wandb)
+        save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.get('use_wandb', False))
     webpage.save()  # save the HTML
 
 if __name__ == '__main__':
