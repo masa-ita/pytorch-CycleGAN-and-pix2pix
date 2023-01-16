@@ -26,8 +26,8 @@ from options.train_options import TrainOptions
 from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
+import util
 from util.visualizer import Visualizer
-from util.mlflow_writer import MlflowWriter
 
 def my_override_dirname(overrides: ListConfig) -> str:
     """Process the overrides passed to the app and return a single string"""
@@ -46,7 +46,11 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
-    opt = TrainOptions().setup(opt)   # get training options
+
+    if opt.suffix:
+        os.suffix = (opt.suffix.format(**vars(opt))) if opt.suffix != '' else ''
+
+    util.set_gpu_device(opt)
 
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options

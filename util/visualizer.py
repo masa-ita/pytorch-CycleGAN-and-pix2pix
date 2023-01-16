@@ -87,6 +87,8 @@ class Visualizer():
 
         if self.display_id > 0:  # connect to a visdom server given <display_port> and <display_server>
             import visdom
+            if opt.suffix:
+                opt.display_env = opt.name + '_' + opt.suffix
             self.vis = visdom.Visdom(server=opt.display_server, port=opt.display_port, env=opt.display_env)
             if not self.vis.check_connection():
                 self.create_visdom_connections()
@@ -105,7 +107,15 @@ class Visualizer():
         if self.use_mlflow:
             self.tracking_uri = self._uri_convert(self.tracking_uri)
             self.registry_uri = self._uri_convert(self.registry_uri)
-            self.mlflow_writer = MlflowWriter(self.name, tracking_uri=self.tracking_uri, registry_uri=self.registry_uri)
+            if opt.suffix:
+                run_name = opt.suffix
+            else:
+                run_name = hydra.overrides
+            self.mlflow_writer = MlflowWriter(
+                self.name,
+                run_name = run_name 
+                tracking_uri=self.tracking_uri, 
+                registry_uri=self.registry_uri,)
             self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
 
         # create a logging file to store training losses

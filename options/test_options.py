@@ -9,9 +9,3 @@ class TestOptions(BaseOptions):
 
     def initialize(self, opt):
         opt = BaseOptions.initialize(self, opt)  # define shared options
-
-        opt.model_name ='test'
-        # To avoid cropping, the load_size should be the same as crop_size
-        opt.load_size = opt.crop_size
-        self.isTrain = False
-        return opt

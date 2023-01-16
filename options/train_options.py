@@ -9,5 +9,3 @@ class TrainOptions(BaseOptions):
 
     def initialize(self, opt):
         opt = BaseOptions.initialize(self, opt)
-        self.isTrain = True
-        return opt

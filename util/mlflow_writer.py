@@ -2,14 +2,14 @@ from mlflow import MlflowClient
 from omegaconf import DictConfig, ListConfig
 
 class MlflowWriter():
-    def __init__(self, experiment_name, **kwargs):
+    def __init__(self, experiment_name, run_name=None, **kwargs):
         self.client = MlflowClient(**kwargs)
         try:
             self.experiment_id = self.client.create_experiment(experiment_name)
         except:
             self.experiment_id = self.client.get_experiment_by_name(experiment_name).experiment_id
 
-        self.run_id = self.client.create_run(self.experiment_id).info.run_id
+        self.run_id = self.client.create_run(self.experiment_id, run_name=run_name).info.run_id
 
     def log_params_from_omegaconf_dict(self, params):
         for param_name, element in params.items():
