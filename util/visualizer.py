@@ -110,10 +110,10 @@ class Visualizer():
             if opt.suffix:
                 run_name = opt.suffix
             else:
-                run_name = hydra.overrides
+                run_name = os.path.split(opt.output_dir)[-1]
             self.mlflow_writer = MlflowWriter(
                 self.name,
-                run_name = run_name 
+                run_name=run_name, 
                 tracking_uri=self.tracking_uri, 
                 registry_uri=self.registry_uri,)
             self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
