@@ -26,7 +26,7 @@ from options.train_options import TrainOptions
 from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
-import util
+from util.util import set_gpu_device
 from util.visualizer import Visualizer
 
 def my_override_dirname(overrides: ListConfig) -> str:
@@ -50,7 +50,9 @@ def main(opt):
     if opt.suffix:
         os.suffix = (opt.suffix.format(**vars(opt))) if opt.suffix != '' else ''
 
-    util.set_gpu_device(opt)
+    set_gpu_device(opt)
+
+    opt.output_dir = HydraConfig.get().runtime.output_dir
 
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
@@ -60,7 +62,6 @@ def main(opt):
     model = create_model(opt)      # create a model given opt.model and other options
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
-    visualizer.mlflow_writer.log_param("output_dir", HydraConfig.get().runtime.output_dir)
     total_iters = 0                # the total number of training iterations
 
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>

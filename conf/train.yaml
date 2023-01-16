@@ -13,8 +13,8 @@ defaults:
   - train_defaults
   - _self_
 
-dataroot:         'datasets/data'
-name:             'experiment_name'
+dataroot:         'datasets/colbase_dataset_4096x2048'
+name:             'colbase_test_after_options2yaml'
 load_size:        1054
 crop_size:        1024
 n_epochs:         5

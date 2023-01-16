@@ -34,6 +34,7 @@ from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
 from util import html
+from util.util import set_gpu_device
 
 try:
     import wandb
@@ -57,7 +58,8 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):
-    opt = TestOptions().setup(opt) # get test options
+
+    set_gpu_device(opt)
 
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
    # hard-code some parameters for test
