@@ -22,7 +22,6 @@ import os
 import time
 import hydra
 from hydra.core.hydra_config import HydraConfig
-from options.train_options import TrainOptions
 from omegaconf import OmegaConf, ListConfig
 from data import create_dataset
 from models import create_model
@@ -48,7 +47,7 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 def main(opt):
 
     if opt.suffix:
-        os.suffix = (opt.suffix.format(**vars(opt))) if opt.suffix != '' else ''
+        os.suffix = (opt.suffix.format(**(dict(opt)))) if opt.suffix != '' else ''
 
     set_gpu_device(opt)
 
