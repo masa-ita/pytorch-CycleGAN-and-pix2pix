@@ -117,6 +117,8 @@ class Visualizer():
                 tracking_uri=self.tracking_uri, 
                 registry_uri=self.registry_uri,)
             self.mlflow_writer.log_params_from_omegaconf_dict(self.opt)
+            conf_dir = os.path.join(hydra.utils.get_original_cwd(), 'conf')
+            self.mlflow_writer.log_artifacts(conf_dir, 'conf')
 
         # create a logging file to store training losses
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
