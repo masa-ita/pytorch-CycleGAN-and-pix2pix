@@ -45,9 +45,9 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
-
+    
     if opt.suffix:
-        os.suffix = (opt.suffix.format(**(dict(opt)))) if opt.suffix != '' else ''
+        opt.suffix = (opt.suffix.format(**dict(opt))) if opt.suffix != '' else ''
 
     set_gpu_device(opt)
 
