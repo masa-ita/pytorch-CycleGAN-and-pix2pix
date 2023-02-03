@@ -6,6 +6,10 @@ hydra:
   sweep:
     dir: multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
+  sweeper:
+    params:
+      gan_mode: vanilla,lsgan
+      lr_D:     2e-7,1e-7
 defaults:
   - base
   - model:          cycle_gan
@@ -19,4 +23,7 @@ load_size:        1054
 crop_size:        1024
 n_epochs:         5
 n_epochs_decay:   5
+netG:             'unet_1024'
+lr_G:             2e-4
 
+suffix:           'gan_mode:{gan_mode}_lr_D:{lr_D}'
