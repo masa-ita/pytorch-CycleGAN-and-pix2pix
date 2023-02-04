@@ -17,17 +17,18 @@ defaults:
   - train_defaults
   - _self_
 
-dataroot:         'datasets/colbase_dataset_4096x2048'
+dataroot:         'datasets/colbase_dataset'
 name:             'colbase_cyclgan_exp_1'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_1024'
-init_type:        'kaimin'
+init_type:        'kaiming'
 no_dropout:       true
-gan_mode:         vannila
+gan_mode:         'vanilla'
 save_latest_freq: 10000
 save_epoch_freq:  50
 display_freq:     820
 update_html_freq: 1640
+gpu_ids:          '3'
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
