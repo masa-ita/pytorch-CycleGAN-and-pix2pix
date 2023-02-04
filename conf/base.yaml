@@ -12,6 +12,8 @@ load_size:        286               # scale images to this size
 max_dataset_size: 99999999          # Maximum number of samples allowed per dataset. If the dataset directory contains more than max_dataset_size, only a subset is loaded.
 preprocess:       'resize_and_crop' # scaling and cropping of images at load time [resize_and_crop | crop | scale_width | scale_width_and_crop | none]
 no_flip:          false             #  if specified, do not flip the images for data augmentation
+display_id:       0
+display_ncols:    4                 # if positive, display all images in a single visdom web panel with certain number of images per row.
 display_winsize:  256               # display window size for both visdom and HTML
 input_nc:         3                 # # of input image channels: 3 for RGB and 1 for grayscale
 output_nc:        3                 # # of output image channels: 3 for RGB and 1 for grayscale
