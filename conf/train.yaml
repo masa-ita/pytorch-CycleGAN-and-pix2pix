@@ -8,22 +8,26 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      gan_mode: vanilla,lsgan
-      lr_D:     2e-7,1e-7
+      lr_D:     2e-2,2e-3,2e-4,2e-5,2e-6
+      lr_G:     2e-2,2e-3,2e-4,2e-5,2e-6
 defaults:
   - base
   - model:          cycle_gan
-  - visualizer:     [visdom,mlflow]
+  - visualizer:     [mlflow]
   - train_defaults
   - _self_
 
 dataroot:         'datasets/colbase_dataset_4096x2048'
-name:             'colbase_test_after_options2yaml'
-load_size:        1054
-crop_size:        1024
-n_epochs:         5
-n_epochs_decay:   5
+name:             'colbase_cyclgan_exp_1'
+load_size:        2078
+crop_size:        2048
 netG:             'unet_1024'
-lr_G:             2e-4
+init_type:        'kaimin'
+no_dropout:       true
+gan_mode:         vannila
+save_latest_freq: 10000
+save_epoch_freq:  50
+display_freq:     820
+update_html_freq: 1640
 
-suffix:           'gan_mode:{gan_mode}_lr_D:{lr_D}'
+suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
