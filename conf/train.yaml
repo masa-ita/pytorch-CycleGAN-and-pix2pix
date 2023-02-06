@@ -8,8 +8,8 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     2e-2,2e-3,2e-4,2e-5,2e-6
-      lr_G:     2e-2,2e-3,2e-4,2e-5,2e-6
+      lr_D:     2e-7
+      lr_G:     2e-2,2e-3,2e-4,2e-5,2e-6,2e-7
 defaults:
   - base
   - model:          cycle_gan
@@ -18,7 +18,7 @@ defaults:
   - _self_
 
 dataroot:         'datasets/colbase_dataset'
-name:             'colbase_cyclgan_exp_1'
+name:             'colbase_cyclegan_exp_2'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_1024'
