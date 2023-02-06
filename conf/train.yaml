@@ -31,3 +31,4 @@ display_freq:     820
 update_html_freq: 1640
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
+seed:             42
