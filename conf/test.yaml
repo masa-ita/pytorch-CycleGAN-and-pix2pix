@@ -6,6 +6,10 @@ hydra:
   sweep:
     dir: multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
+  sweeper:
+    params:
+      lr_D:     2e-2,2e-3,2e-4,2e-5,2e-6
+      lr_G:     2e-2,2e-3,2e-4,2e-5,2e-6
 defaults:
   - base
   - model:          test
@@ -14,8 +18,13 @@ defaults:
   - test_defaults
   - _self_
 
-dataroot:         'datasets/colbase_dataset_4096x2048'
-name:             'colbase_test_after_options2yaml'
-load_size:        1054
-crop_size:        1024
+dataroot:         'datasets/colbase_dataset'
+name:             'colbase_cyclgan_exp_1'
+load_size:        2078
+crop_size:        2048
+netG:             'unet_1024'
+no_dropout:       true
 model_suffix:     '_A'
+aspect_ratio:     0.5
+gpu_ids:          '3'
+suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
