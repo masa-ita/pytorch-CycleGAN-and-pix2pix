@@ -32,3 +32,4 @@ update_html_freq: 1640
 gpu_ids:          '3'
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
+seed:             42

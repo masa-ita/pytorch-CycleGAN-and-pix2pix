@@ -18,7 +18,9 @@ See options/base_options.py and options/train_options.py for more training optio
 See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/tips.md
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
-import os
+import random
+import numpy as np
+import torch
 import time
 import hydra
 from hydra.core.hydra_config import HydraConfig
@@ -27,6 +29,19 @@ from data import create_dataset
 from models import create_model
 from util.util import set_gpu_device
 from util.visualizer import Visualizer
+
+
+def torch_fix_seed(seed=42):
+    # Python random
+    random.seed(seed)
+    # Numpy
+    np.random.seed(seed)
+    # Pytorch
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.use_deterministic_algorithms = True
+
 
 def my_override_dirname(overrides: ListConfig) -> str:
     """Process the overrides passed to the app and return a single string"""
@@ -45,7 +60,10 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 
 @hydra.main(version_base=None, config_path="conf", config_name="train")
 def main(opt):
-    
+    opt.seed = opt.get('seed', None)
+    if opt.seed:
+        torch_fix_seed(opt.seed)
+
     if opt.suffix:
         opt.suffix = (opt.suffix.format(**dict(opt))) if opt.suffix != '' else ''
 
