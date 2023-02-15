@@ -62,6 +62,10 @@ def main(opt):
     set_gpu_device(opt)
 
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
+
+    if opt.suffix:
+        opt.suffix = (opt.suffix.format(**dict(opt))) if opt.suffix != '' else ''
+
    # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
     opt.batch_size = 1    # test code only supports batch_size = 1
@@ -79,7 +83,7 @@ def main(opt):
 
     # create a website
     opt.results_dir = hydra.utils.to_absolute_path(opt.results_dir)
-    web_dir = os.path.join(opt.results_dir, opt.name, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
+    web_dir = os.path.join(opt.results_dir, opt.name, opt.suffix, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
     if opt.load_iter > 0:  # load_iter is 0 by default
         web_dir = '{:s}_iter{:d}'.format(web_dir, opt.load_iter)
     print('creating web directory', web_dir)
