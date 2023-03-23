@@ -75,7 +75,13 @@ def main(opt):
     model = create_model(opt)      # create a model given opt.model and other options
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
-    model_graph.draw_graph(model.netG_A, 
+    model_graph.draw_graph(model.netG_A,
+                           graph_name="netG_A"
+                           input_size=(1, 3, 2048, 2048), 
+                           expand_nested=True,
+                           save_graph=True)
+    model_graph.draw_graph(model.netG_A,
+                           graph_name="netG_A"
                            input_size=(1, 3, 2048, 2048), 
                            expand_nested=True,
                            save_graph=True)
