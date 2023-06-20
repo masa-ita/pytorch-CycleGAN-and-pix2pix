@@ -20,7 +20,7 @@ defaults:
   - _self_
 
 dataroot:         'datasets/oyu_stone_dataset/testA'
-name:             'oyu_cyclegan_test_run_03'
+name:             'oyu_cyclegan_test_run_11'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
