@@ -6,10 +6,6 @@ hydra:
   sweep:
     dir: multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
-  sweeper:
-    params:
-      lr_D:     2e-8,2e-7,2e-6,2e-5,2e-4,2e-3
-      lr_G:     2e-6,2e-5,2e-4,2e-3,2e-2,2e-1
 
 defaults:
   - base
@@ -18,14 +14,15 @@ defaults:
   - train_defaults
   - _self_
 
-dataroot:         'datasets/oyu_stone_dataset'
-name:             'oyu_cyclegan_test_run_11'
+dataroot:         'datasets/data'
+dataset_mode:     'multifile'
+name:             'multifiles_test_run'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
 init_type:        'kaiming'
 no_dropout:       true
-gpu_ids:          '3'
+
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
 seed:             42

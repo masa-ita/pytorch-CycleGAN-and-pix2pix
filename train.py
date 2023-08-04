@@ -67,7 +67,8 @@ def main(opt):
     if opt.suffix:
         opt.suffix = (opt.suffix.format(**dict(opt))) if opt.suffix != '' else ''
 
-    set_gpu_device(opt)
+    if torch.cuda.is_available():
+        set_gpu_device(opt)
 
     opt.output_dir = HydraConfig.get().runtime.output_dir
 
