@@ -19,13 +19,14 @@ dataset_mode:     'multifile'
 name:             'multifiles_test_run'
 load_size:        1054
 crop_size:        1024
-netG:             'unet_2048'
+netG:             'unet_1024'
 init_type:        'kaiming'
 lambda_identity:  0.0
 no_dropout:       true
 color_spaces:
   - "lds"
   - "ybk"
+gpu_ids:          '0'
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
 seed:             42

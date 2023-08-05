@@ -6,10 +6,6 @@ hydra:
   sweep:
     dir: multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
-  sweeper:
-    params:
-      lr_D:     2e-8,2e-7,2e-6,2e-5,2e-4,2e-3
-      lr_G:     2e-6,2e-5,2e-4,2e-3,2e-2,2e-1
 
 defaults:
   - base
@@ -19,16 +15,20 @@ defaults:
   - test_defaults
   - _self_
 
-dataroot:         'datasets/oyu_stone_dataset/testA'
-name:             'oyu_cyclegan_test_run_11'
-load_size:        2078
-crop_size:        2048
-netG:             'unet_2048'
+dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
+dataset_mode:     'multifile'
+name:             'multifiles_test_run'
+load_size:        1054
+crop_size:        1024
+netG:             'unet_1024'
 no_dropout:       true
 gan_mode:         lsgan
 model_suffix:     '_A'
 aspect_ratio:     0.66753
-gpu_ids:          '3'
+color_spaces:
+  - "lds"
+  - "ybk"
+gpu_ids:          '0'
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
 seed:             42

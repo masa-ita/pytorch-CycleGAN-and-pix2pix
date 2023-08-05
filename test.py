@@ -35,6 +35,7 @@ from models import create_model
 from util.visualizer import save_images
 from util import html
 from util.util import set_gpu_device
+import torch
 
 try:
     import wandb
@@ -59,7 +60,8 @@ OmegaConf.register_new_resolver("my_override_dirname", my_override_dirname)
 @hydra.main(version_base=None, config_path="conf", config_name="test")
 def main(opt):
 
-    set_gpu_device(opt)
+    if torch.cuda.is_available():
+        set_gpu_device(opt)
 
     opt.dataroot = hydra.utils.to_absolute_path(opt.dataroot)
 
