@@ -14,15 +14,18 @@ defaults:
   - train_defaults
   - _self_
 
-dataroot:         'datasets/data'
+dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
 name:             'multifiles_test_run'
-load_size:        2078
-crop_size:        2048
+load_size:        1054
+crop_size:        1024
 netG:             'unet_2048'
 init_type:        'kaiming'
+lambda_identity:  0.0
 no_dropout:       true
-
+color_spaces:
+  - "lds"
+  - "ybk"
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
 seed:             42

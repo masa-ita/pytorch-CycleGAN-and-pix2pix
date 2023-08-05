@@ -74,7 +74,7 @@ class MultifileDataset(BaseDataset):
         for cs in self.color_spaces:
             A_path = self.A_paths[cs][index % self.A_size]  # make sure index is within then range
             A_images.append(np.array(self.transform_A(Image.open(A_path).convert('RGB'))))
-        A = np.concatenate(A_images, 2)
+        A = np.concatenate(A_images, 0)
 
         if self.opt.serial_batches:   # make sure index is within then range
             index_B = index % self.B_size
