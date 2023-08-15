@@ -40,16 +40,23 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256, use_w
     webpage.add_header(name)
     ims, txts, links = [], [], []
     ims_dict = {}
-    for label, im_data in visuals.items():
+    for base_label, im_data in visuals.items():
         im = util.tensor2im(im_data)
-        image_name = '%s_%s.png' % (name, label)
-        save_path = os.path.join(image_dir, image_name)
-        util.save_image(im, save_path, aspect_ratio=aspect_ratio)
-        ims.append(image_name)
-        txts.append(label)
-        links.append(image_name)
-        if use_wandb:
-            ims_dict[label] = wandb.Image(im)
+        num_images = im.shape[2] // 3
+        for i in range(num_images):
+            if num_images > 1:
+                label = f"{base_label}_{i}"
+            else:
+                label = base_label
+            image = im[:, :, 3 * i: 3 * (i + 1)]
+            image_name = '%s_%s.png' % (name, label)
+            save_path = os.path.join(image_dir, image_name)
+            util.save_image(image, save_path, aspect_ratio=aspect_ratio)
+            ims.append(image_name)
+            txts.append(label)
+            links.append(image_name)
+            if use_wandb:
+                ims_dict[label] = wandb.Image(image)
     webpage.add_images(ims, txts, links, width=width)
     if use_wandb:
         wandb.log(ims_dict)
@@ -167,14 +174,16 @@ class Visualizer():
                 label_html_row = ''
                 images = []
                 idx = 0
-                for label, image in visuals.items():
+                for base_label, image in visuals.items():
                     image_numpy = util.tensor2im(image)
-                    num_images = image_numpy.shape[0] % 3
+                    num_images = image_numpy.shape[2] // 3
                     for i in range(num_images):
                         if num_images > 1:
-                            label += f"_{i}"
+                            label = f"{base_label}_{i}"
+                        else:
+                            label = base_label
                         label_html_row += '<td>%s</td>' % label
-                        image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                        image = image_numpy[:, :, 3 * i: 3 * (i + 1)]
                         images.append(image.transpose([2, 0, 1]))
                         idx += 1
                         if idx % ncols == 0:
@@ -199,13 +208,15 @@ class Visualizer():
             else:     # show each image in a separate visdom panel;
                 idx = 1
                 try:
-                    for label, image in visuals.items():
+                    for base_label, image in visuals.items():
                         image_numpy = util.tensor2im(image)
-                        num_images = image_numpy.shape[0] % 3
-                        if num_images > 1:
-                            label += f"_{i}"
+                        num_images = image_numpy.shape[2] // 3
                         for i in range(num_images):
-                            image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                            if num_images > 1:
+                                label = f"{base_label}_{i}"
+                            else:
+                                label = base_label
+                            image = image_numpy[:, :, 3 * i: 3 * (i + 1)]
                             self.vis.image(image.transpose([2, 0, 1]), opts=dict(title=label),
                                         win=self.display_id + idx)
                             idx += 1
@@ -218,13 +229,15 @@ class Visualizer():
             result_table = wandb.Table(columns=columns)
             table_row = [epoch]
             ims_dict = {}
-            for label, image in visuals.items():
+            for base_label, image in visuals.items():
                 image_numpy = util.tensor2im(image)
-                num_images = image_numpy.shape[0] % 3
+                num_images = image_numpy.shape[2] // 3
                 for i in range(num_images):
-                    image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                    image = image_numpy[:, :, 3 * i: 3 * (i + 1)]
                     if num_images > 1:
-                        label += f"_{i}"
+                        label = f"{base_label}_{i}"
+                    else:
+                        label = base_label
                     wandb_image = wandb.Image(image)
                     table_row.append(wandb_image)
                     ims_dict[label] = wandb_image
@@ -237,13 +250,15 @@ class Visualizer():
         if self.use_html and (save_result or not self.saved):  # save images to an HTML file if they haven't been saved.
             self.saved = True
             # save images to the disk
-            for label, image in visuals.items():
+            for base_label, image in visuals.items():
                 image_numpy = util.tensor2im(image)
-                num_images = image_numpy.shape[0] % 3
+                num_images = image_numpy.shape[2] // 3
                 for i in range(num_images):
-                    image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                    image = image_numpy[:, :, 3 * i: 3 * (i + 1)]
                     if num_images > 1:
-                        label += f"_{i}"
+                        label = f"{base_label}_{i}"
+                    else:
+                        label = base_label
                     img_path = os.path.join(self.img_dir, 'epoch%.3d_%s.png' % (epoch, label))
                     util.save_image(image, img_path)
                     if self.use_mlflow:
@@ -255,13 +270,15 @@ class Visualizer():
                 webpage.add_header('epoch [%d]' % n)
                 ims, txts, links = [], [], []
 
-                for label, image_numpy in visuals.items():
+                for base_label, image in visuals.items():
                     image_numpy = util.tensor2im(image)
-                    num_images = image_numpy.shape[0] % 3
+                    num_images = image_numpy.shape[2] // 3
                     for i in range(num_images):
-                        image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                        image = image_numpy[:, :, 3 * i: 3 * (i + 1)]
                         if num_images > 1:
-                            label += f"_{i}"
+                            label = f"{base_label}_{i}"
+                        else:
+                            label = base_label
                         img_path = 'epoch%.3d_%s.png' % (n, label)
                         ims.append(img_path)
                         txts.append(label)
