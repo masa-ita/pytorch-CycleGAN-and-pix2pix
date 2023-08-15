@@ -169,13 +169,18 @@ class Visualizer():
                 idx = 0
                 for label, image in visuals.items():
                     image_numpy = util.tensor2im(image)
-                    label_html_row += '<td>%s</td>' % label
-                    images.append(image_numpy.transpose([2, 0, 1]))
-                    idx += 1
-                    if idx % ncols == 0:
-                        label_html += '<tr>%s</tr>' % label_html_row
-                        label_html_row = ''
-                white_image = np.ones_like(image_numpy.transpose([2, 0, 1])) * 255
+                    num_images = image_numpy.shape[0] % 3
+                    for i in range(num_images):
+                        if num_images > 1:
+                            label += f"_{i}"
+                        label_html_row += '<td>%s</td>' % label
+                        image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                        images.append(image.transpose([2, 0, 1]))
+                        idx += 1
+                        if idx % ncols == 0:
+                            label_html += '<tr>%s</tr>' % label_html_row
+                            label_html_row = ''
+                white_image = np.ones_like(image.transpose([2, 0, 1])) * 255
                 while idx % ncols != 0:
                     images.append(white_image)
                     label_html_row += '<td></td>'
@@ -196,9 +201,14 @@ class Visualizer():
                 try:
                     for label, image in visuals.items():
                         image_numpy = util.tensor2im(image)
-                        self.vis.image(image_numpy.transpose([2, 0, 1]), opts=dict(title=label),
-                                       win=self.display_id + idx)
-                        idx += 1
+                        num_images = image_numpy.shape[0] % 3
+                        if num_images > 1:
+                            label += f"_{i}"
+                        for i in range(num_images):
+                            image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                            self.vis.image(image.transpose([2, 0, 1]), opts=dict(title=label),
+                                        win=self.display_id + idx)
+                            idx += 1
                 except VisdomExceptionBase:
                     self.create_visdom_connections()
 
@@ -210,9 +220,14 @@ class Visualizer():
             ims_dict = {}
             for label, image in visuals.items():
                 image_numpy = util.tensor2im(image)
-                wandb_image = wandb.Image(image_numpy)
-                table_row.append(wandb_image)
-                ims_dict[label] = wandb_image
+                num_images = image_numpy.shape[0] % 3
+                for i in range(num_images):
+                    image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                    if num_images > 1:
+                        label += f"_{i}"
+                    wandb_image = wandb.Image(image)
+                    table_row.append(wandb_image)
+                    ims_dict[label] = wandb_image
             self.wandb_run.log(ims_dict)
             if epoch != self.current_epoch:
                 self.current_epoch = epoch
@@ -224,10 +239,15 @@ class Visualizer():
             # save images to the disk
             for label, image in visuals.items():
                 image_numpy = util.tensor2im(image)
-                img_path = os.path.join(self.img_dir, 'epoch%.3d_%s.png' % (epoch, label))
-                util.save_image(image_numpy, img_path)
-                if self.use_mlflow:
-                    self.mlflow_writer.log_artifact(img_path)
+                num_images = image_numpy.shape[0] % 3
+                for i in range(num_images):
+                    image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                    if num_images > 1:
+                        label += f"_{i}"
+                    img_path = os.path.join(self.img_dir, 'epoch%.3d_%s.png' % (epoch, label))
+                    util.save_image(image, img_path)
+                    if self.use_mlflow:
+                        self.mlflow_writer.log_artifact(img_path)
 
             # update website
             webpage = html.HTML(self.web_dir, 'Experiment name = %s' % self.name, refresh=1)
@@ -237,10 +257,15 @@ class Visualizer():
 
                 for label, image_numpy in visuals.items():
                     image_numpy = util.tensor2im(image)
-                    img_path = 'epoch%.3d_%s.png' % (n, label)
-                    ims.append(img_path)
-                    txts.append(label)
-                    links.append(img_path)
+                    num_images = image_numpy.shape[0] % 3
+                    for i in range(num_images):
+                        image = image_numpy[3 * i: 3 * (i + 1), :, :]
+                        if num_images > 1:
+                            label += f"_{i}"
+                        img_path = 'epoch%.3d_%s.png' % (n, label)
+                        ims.append(img_path)
+                        txts.append(label)
+                        links.append(img_path)
                 webpage.add_images(ims, txts, links, width=self.win_size)
             webpage.save()
 
