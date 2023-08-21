@@ -26,7 +26,7 @@ registry_url:     'file:///raid/itagaki/mlruns'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
-netD:             'layers'
+netD:             'n_layers'
 n_layers_D:       4
 init_type:        'kaiming'
 no_dropout:       true
