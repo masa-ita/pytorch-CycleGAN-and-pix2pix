@@ -8,8 +8,8 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     1e-4,2e-4,4e-4
-      lr_G:     1e-3,2e-3,4e-3
+      lr_D:     2e-8,2e-7,2e-6,2e-5,2e-4,2e-3
+      lr_G:     2e-6,2e-5,2e-4,2e-3,2e-2,2e-1
 
 defaults:
   - base
@@ -21,7 +21,7 @@ defaults:
 
 dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
-name:             'colbase_multifiles_run_02'
+name:             'colbase_multifiles_run_03'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
@@ -32,7 +32,7 @@ gpu_ids:          '3'
 color_spaces:
   - "lds"
   - "ybk"
-result_dir:       "/raid/itagaki/colbase_cyclegan/results"
+results_dir:       "/raid/itagaki/colbase_cyclegan/results"
 
 suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
 seed:             42
