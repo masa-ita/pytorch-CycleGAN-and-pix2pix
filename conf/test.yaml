@@ -21,7 +21,7 @@ defaults:
 
 dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
-name:             'colbase_multifiles_run_05'
+name:             'colbase_multifiles_run_06'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
