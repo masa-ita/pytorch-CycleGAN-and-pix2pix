@@ -9,7 +9,7 @@ hydra:
   sweeper:
     params:
       lr_D:     1e-4,2e-4,3e-4,4e-4
-      lr_G:     9.9e-4,1e-3,2e-3,3e-3
+      lr_G:     9e-4,1e-3,2e-3,3e-3
 
 defaults:
   - base
