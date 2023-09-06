@@ -6,10 +6,6 @@ hydra:
   sweep:
     dir: /raid/itagaki/colbase_cyclegan/multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
-  sweeper:
-    params:
-      lr_D:     1e-4,2e-4,3e-4,4e-4
-      lr_G:     4e-3,5e-3,6e-3
 
 defaults:
   - base
@@ -20,7 +16,7 @@ defaults:
 
 dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
-name:             'colbase_multifiles_run_08'
+name:             'colbase_multifiles_run_09'
 tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
 load_size:        2078
@@ -31,17 +27,16 @@ n_layers_D:       4
 init_type:        'kaiming'
 no_dropout:       true
 gan_mode:         'lsgan'
-lambda_A: 20.0
-lambda_B: 20.0
+lr_D:             3.16e-4
+lr_G:             1e-3
+lambda_A:         15.0
+lambda_B:         15.0
 lambda_identity:  0.0
 save_latest_freq: 10000
 save_epoch_freq:  50
 display_freq:     820
 update_html_freq: 1640
 gpu_ids:          '3'
-color_spaces:
-  - "lds"
-  - "ybk"
 
-suffix:           'lr_D-{lr_D}-lr_G-{lr_G}'
+suffix:           'lr_D-{lr_D}-lr_G-{lr_G}-color_spaces{color_spaces[0]}-{color_spaces[1]}'
 seed:             42
