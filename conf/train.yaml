@@ -38,5 +38,5 @@ display_freq:     820
 update_html_freq: 1640
 gpu_ids:          '3'
 
-suffix:           'lr_D-{lr_D}-lr_G-{lr_G}-color_spaces{color_spaces[0]}-{color_spaces[1]}'
+suffix:           'lr_D-{lr_D}-lr_G-{lr_G}-color_spaces-{color_spaces[0]}-{color_spaces[1]}'
 seed:             42

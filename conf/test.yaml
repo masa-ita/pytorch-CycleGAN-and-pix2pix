@@ -28,5 +28,5 @@ gpu_ids:          '3'
 
 results_dir:       "/raid/itagaki/colbase_cyclegan/results"
 
-suffix:           'lr_D-{lr_D}-lr_G-{lr_G}-color_spaces{color_spaces[0]}-{color_spaces[1]}'
+suffix:           'lr_D-{lr_D}-lr_G-{lr_G}-color_spaces-{color_spaces[0]}-{color_spaces[1]}'
 seed:             42
