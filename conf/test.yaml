@@ -21,7 +21,7 @@ defaults:
 
 dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
-name:             'colbase_multifiles_run_10'
+name:             'colbase_multifiles_run_11'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
@@ -29,6 +29,9 @@ no_dropout:       true
 model_suffix:     '_A'
 aspect_ratio:     0.5
 gpu_ids:          '3'
+color_spaces:
+  - ydt
+  - yyt
 
 results_dir:       "/raid/itagaki/colbase_cyclegan/results"
 
