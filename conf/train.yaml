@@ -8,8 +8,8 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     1e-4,3.16e-4,1e-3
-      lr_G:     3.16e-4,1e-3,3.16e-3
+      lr_D:     1e-4,1.78e-4,3.16e-4,5.62e-4,1e-3
+      lr_G:     1e-4,1.78e-4,3.16e-4,5.62e-4,1e-3
 
 defaults:
   - base
@@ -20,7 +20,7 @@ defaults:
 
 dataroot:         'datasets/colbase_multifile_dataset_4096x2048'
 dataset_mode:     'multifile'
-name:             'colbase_multifiles_run_11'
+name:             'colbase_multifiles_run_12'
 tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
 load_size:        2078
