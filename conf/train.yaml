@@ -13,7 +13,7 @@ hydra:
 
 defaults:
   - base
-  - model:          cycle_gan
+  - model:          masked_cycle_gan
   - visualizer:     [mlflow]
   - train_defaults
   - _self_
