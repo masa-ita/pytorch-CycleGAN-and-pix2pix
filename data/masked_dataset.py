@@ -62,10 +62,10 @@ class MaskedDataset(BaseDataset):
         maskA_img = Image.open(maskA_path).convert('RGB')
         maskB_img = Image.open(maskB_path).convert('RGB')
         
+        btoA = self.opt.direction == 'BtoA'
         input_nc = self.opt.output_nc if btoA else self.opt.input_nc       # get the number of channels of input image
         output_nc = self.opt.input_nc if btoA else self.opt.output_nc      # get the number of channels of output image
 
-        btoA = self.opt.direction == 'BtoA'
         crop_pos_x = random.randint(0, self.opt.load_size - self.opt.crop_size)
         crop_pos_y = random.randint(0, self.opt.load_size - self.opt.crop_size)
         self.transform_A = get_transform(self.opt, 
