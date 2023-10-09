@@ -20,6 +20,7 @@ defaults:
   - _self_
 
 dataroot:         'datasets/masked_stone_dataset'
+dataset_mode:     'masked'
 name:             'oyu_masked_cyclegan_run_01'
 load_size:        2078
 crop_size:        2048
