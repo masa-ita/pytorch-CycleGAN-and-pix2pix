@@ -2,14 +2,14 @@ hydra:
   job:
     chdir: true
   run:
-    dir: outputs/${name}/${my_override_dirname:${hydra.overrides}}
+    dir: /raid/itagaki/oyu/outputs/${name}/${my_override_dirname:${hydra.overrides}}
   sweep:
-    dir: multirun/${name}
+    dir: /raid/itagaki/oyu/multirun/${name}
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     2e-8,2e-7,2e-6,2e-5,2e-4,2e-3
-      lr_G:     2e-6,2e-5,2e-4,2e-3,2e-2,2e-1
+      lr_D:     2e-5,2e-4,2e-3
+      lr_G:     2e-4,2e-3,2e-2
 
 defaults:
   - base
@@ -19,8 +19,8 @@ defaults:
   - test_defaults
   - _self_
 
-dataroot:         'datasets/oyu_stone_dataset/testA'
-name:             'oyu_cyclegan_test_run_11'
+dataroot:         'datasets/masked_stone_dataset'
+name:             'oyu_masked_cyclegan_run_01'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
