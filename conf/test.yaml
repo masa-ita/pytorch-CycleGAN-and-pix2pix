@@ -8,8 +8,8 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     2e-5,2e-4,2e-3
-      lr_G:     2e-4,2e-3,2e-2
+      lr_D:     2e-5,6.32e-5,2e-4,6.32e-4,2e-3
+      lr_G:     2e-4,6.32e-4,2e-3,6.32e-3,2e-2
 
 defaults:
   - base
@@ -21,7 +21,7 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_01'
+name:             'oyu_masked_cyclegan_run_02'
 load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
