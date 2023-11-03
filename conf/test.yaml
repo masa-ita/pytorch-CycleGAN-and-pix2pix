@@ -21,7 +21,7 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_04'
+name:             'oyu_masked_cyclegan_run_03'
 results_dir:       "/raid/itagaki/oyu/results"
 load_size:        2078
 crop_size:        2048
