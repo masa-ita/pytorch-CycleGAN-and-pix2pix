@@ -94,8 +94,8 @@ class MaskedCycleGANModel(BaseModel):
         self.masked_real_B = self.real_B * self.mask_B
         self.masked_fake_B = self.fake_B * self.mask_A
         self.masked_fake_A = self.fake_A * self.mask_B
-        self.combined_fake_B = self.real_A * (1 - self.maskA) + self.masked_fake_B
-        self.combined_fake_A = self.real_B * (1 - self.maskB) + self.masked_fake_A
+        self.combined_fake_B = self.real_A * (1 - self.mask_A) + self.masked_fake_B
+        self.combined_fake_A = self.real_B * (1 - self.mask_B) + self.masked_fake_A
 
     def backward_D_basic(self, netD, real, fake):
         """Calculate GAN loss for the discriminator
