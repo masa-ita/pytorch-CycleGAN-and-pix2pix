@@ -73,12 +73,17 @@ class MaskedDataset(BaseDataset):
                                                  "flip":True}, 
                                          grayscale=(input_nc == 1))
         self.transform_B = get_transform(self.opt, grayscale=(output_nc == 1))
-
+        self.transform_maskA = get_transform(self.opt,
+                                             params={"crop_pos": (crop_pos_x, crop_pos_y),
+                                                 "flip":True}, 
+                                             grayscale=(input_nc == 1),
+                                             mask=True)
+        self.transform_maskB = get_transform(self.opt, grayscale=(output_nc == 1), mask=True)
         # apply image transformation
         A = self.transform_A(A_img)
         B = self.transform_B(B_img)
-        maskA = self.transform_A(maskA_img)
-        maskB = self.transform_B(maskB_img)
+        maskA = self.transform_maskA(maskA_img)
+        maskB = self.transform_maskB(maskB_img)
 
         return {'A': A, 'B': B, 'A_paths': A_path, 'B_paths': B_path, 'maskA': maskA, 'maskB': maskB}
 

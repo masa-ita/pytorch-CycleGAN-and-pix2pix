@@ -41,6 +41,7 @@ class TestModel(BaseModel):
         self.real = input['A'].to(self.device)
         self.image_paths = input['A_paths']
         self.mask = input['maskA'].to(self.device)
+        print(self.mask)
 
     def forward(self):
         """Run forward pass."""
