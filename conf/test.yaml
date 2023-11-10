@@ -27,7 +27,7 @@ load_size:        2078
 crop_size:        2048
 netG:             'unet_2048'
 no_dropout:       true
-model_suffix:     '_A'
+model_suffix:     '_B'
 aspect_ratio:     0.66753
 gpu_ids:          '3'
 
