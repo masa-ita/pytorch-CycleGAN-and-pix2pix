@@ -38,10 +38,17 @@ class TestModel(BaseModel):
 
         We need to use 'single_dataset' dataset mode. It only load images from one domain.
         """
-        self.real = input['A'].to(self.device)
-        self.image_paths = input['A_paths']
-        self.mask = input['maskA'].to(self.device)
-
+        if self.model_names[0] == "G_A":
+            self.real = input['A'].to(self.device)
+            self.image_paths = input['A_paths']
+            self.mask = input['maskA'].to(self.device)
+        elif self.model_names[0] == "G_B":
+            self.real = input['B'].to(self.device)
+            self.image_paths = input['B_paths']
+            self.mask = input['maskB'].to(self.device)
+        else:
+            raise ValueError("invalid model_suffix")
+        
     def forward(self):
         """Run forward pass."""
         self.fake = self.netG(self.real)  # G(real)

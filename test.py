@@ -83,7 +83,7 @@ def main(opt):
 
     # create a website
     opt.results_dir = hydra.utils.to_absolute_path(opt.results_dir)
-    web_dir = os.path.join(opt.results_dir, opt.name, opt.suffix, '{}_{}'.format(opt.phase, opt.epoch))  # define the website directory
+    web_dir = os.path.join(opt.results_dir, opt.name, opt.suffix, '{}{}_{}'.format(opt.phase, opt.model_suffix, opt.epoch))  # define the website directory
     if opt.load_iter > 0:  # load_iter is 0 by default
         web_dir = '{:s}_iter{:d}'.format(web_dir, opt.load_iter)
     print('creating web directory', web_dir)
