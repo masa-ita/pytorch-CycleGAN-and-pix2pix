@@ -2,7 +2,7 @@ import os
 import fileinput
 
 # スキャン対象のディレクトリパス
-target_directory = '/home/itagaki/pytorch-CycleGAN-and-pix2pix/mlruns'  # ディレクトリの実際のパスに置き換えてください
+target_directory = '/raid/itagaki/mlruns'  # ディレクトリの実際のパスに置き換えてください
 
 # 置換前の文字列と置換後の文字列
 search_text = 'file:///home/itagaki/pytorch-CycleGAN-and-pix2pix/mlruns'
