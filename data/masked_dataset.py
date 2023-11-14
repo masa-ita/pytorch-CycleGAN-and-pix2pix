@@ -84,7 +84,8 @@ class MaskedDataset(BaseDataset):
         self.transform_maskB = get_transform(self.opt, 
                                              params={"crop_pos": (crop_pos_x, crop_pos_y),
                                                  "flip":True}, 
-                                             grayscale=(output_nc == 1), mask=True)
+                                             grayscale=(output_nc == 1), 
+                                             mask=True)
         # apply image transformation
         A = self.transform_A(A_img)
         B = self.transform_B(B_img)
