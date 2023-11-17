@@ -25,7 +25,7 @@ name:             'oyu_masked_cyclegan_run_06'
 results_dir:       "/raid/itagaki/oyu/results"
 load_size:        2078
 crop_size:        2048
-netG:             'resnet_9blocks'
+netG:             'resnet_6blocks'
 no_dropout:       true
 model_suffix:     '_A'
 aspect_ratio:     0.66753
