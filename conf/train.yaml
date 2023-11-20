@@ -8,7 +8,7 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     2e-5,6.32e-5
+      lr_D:     6.32e-4,2e-3
       lr_G:     2e-4,6.32e-4,2e-3,6.32e-3,2e-2
 
 defaults:
@@ -25,7 +25,7 @@ tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
 load_size:        1054
 crop_size:        1024
-netG:             'resnet_9blocks'
+netG:             'resnet_blocks'
 netD:             'n_layers'
 n_layers_D:       3
 init_type:        'kaiming'
