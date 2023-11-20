@@ -8,7 +8,7 @@ hydra:
     subdir: ${my_override_dirname:${hydra.overrides}}
   sweeper:
     params:
-      lr_D:     2e-5,6.32e-5,2e-4,6.32e-4,2e-3
+      lr_D:     2e-5,6.32e-5
       lr_G:     2e-4,6.32e-4,2e-3,6.32e-3,2e-2
 
 defaults:
@@ -20,7 +20,7 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_06'
+name:             'oyu_masked_cyclegan_run_07'
 tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
 load_size:        1054
@@ -30,7 +30,7 @@ netD:             'n_layers'
 n_layers_D:       3
 init_type:        'kaiming'
 gan_mode:         'lsgan'
-no_dropout:       true
+no_dropout:       false
 gpu_ids:          '3'
 n_epochs:         100
 n_epochs_decay:   300
