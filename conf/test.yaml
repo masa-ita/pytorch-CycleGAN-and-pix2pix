@@ -21,11 +21,11 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_08'
+name:             'oyu_masked_cyclegan_run_09'
 results_dir:       "/raid/itagaki/oyu/results"
-load_size:        1054
-crop_size:        1024
-netG:             'resnet_9blocks'
+load_size:        2078
+crop_size:        2048
+netG:             'unet_2048'
 no_dropout:       false
 model_suffix:     '_A'
 aspect_ratio:     0.66753

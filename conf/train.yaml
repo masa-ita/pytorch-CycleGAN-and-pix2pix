@@ -20,12 +20,12 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_08'
+name:             'oyu_masked_cyclegan_run_09'
 tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
-load_size:        1054
-crop_size:        1024
-netG:             'resnet_9blocks'
+load_size:        2078
+crop_size:        2048
+netG:             'unet_2048'
 netD:             'n_layers'
 n_layers_D:       3
 init_type:        'kaiming'
