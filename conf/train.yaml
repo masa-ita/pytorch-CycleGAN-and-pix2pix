@@ -25,7 +25,7 @@ tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
 load_size:        1054
 crop_size:        1024
-netG:             'unet_2048'
+netG:             'unet_1024'
 netD:             'n_layers'
 n_layers_D:       3
 init_type:        'kaiming'
