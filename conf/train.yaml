@@ -20,20 +20,20 @@ defaults:
 
 dataroot:         'datasets/masked_stone_dataset'
 dataset_mode:     'masked'
-name:             'oyu_masked_cyclegan_run_10'
+name:             'oyu_masked_cyclegan_run_11'
 tracking_uri:     'file:/raid/itagaki/mlruns'
 registry_uri:     'file:/raid/itagaki/mlruns'
-load_size:        1054
-crop_size:        1024
-netG:             'unet_1024'
+load_size:        542
+crop_size:        512
+netG:             'unet_512'
 netD:             'n_layers'
 n_layers_D:       3
 init_type:        'kaiming'
 gan_mode:         'lsgan'
-no_dropout:       false
+no_dropout:       true
 gpu_ids:          '3'
 n_epochs:         0
-n_epochs_decay:   400
+n_epochs_decay:   200
 save_latest_freq: 10000
 save_epoch_freq:  50
 display_freq:     1000
